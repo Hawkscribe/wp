@@ -4,7 +4,7 @@ const app=express();
 const mongoose=require('monggoose');
 import allTodo from "./routes/alltodo.js";
 try {
-    mongoose.connnct('mongodb+srv://database1:123456789pwd@cluster0.bhtab.mongodb.net/p1');
+    mongoose.connnct('MONGO_URL');
     console.log("Mongoose started");
 } catch (error) {
     console.log("Error in connecting database");
@@ -16,7 +16,7 @@ app.get('/',(req,res)=>{
 });
 app.use("/api/user",loginOut);
 app.use("/api/todo",allTodo);
-
+app.use("/api/calendar",calendar);
 
 
 app.listen(8000,()=>{
