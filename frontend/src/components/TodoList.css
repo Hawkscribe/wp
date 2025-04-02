@@ -1,0 +1,159 @@
+/* Improved TodoList.css */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f7fa;
+    margin: 0;
+    padding: 20px;
+  }
+  
+  .todo-container {
+    width: 100%;
+    max-width: 500px;
+    background-color: white;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px auto;
+  }
+  
+  .todo-container h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-weight: 600;
+    font-size: 28px;
+  }
+  
+  .todo-list {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 25px;
+  }
+  
+  .todo-item {
+    padding: 14px;
+    margin: 10px 0;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease;
+  }
+  
+  .todo-item:hover {
+    transform: translateY(-2px);
+  }
+  
+  .priority-imp {
+    background-color: #ff6b6b;
+    color: white;
+    border-left: 5px solid #e74c3c;
+  }
+  
+  .priority-medium {
+    background-color: #ffe66d;
+    color: #333;
+    border-left: 5px solid #f39c12;
+  }
+  
+  .priority-high {
+    background-color: #ff9f43;
+    color: white;
+    border-left: 5px solid #e67e22;
+  }
+  
+  .task-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .priority-badge {
+    font-size: 12px;
+    padding: 3px 8px;
+    border-radius: 12px;
+    margin-left: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  .badge-imp {
+    background-color: #e74c3c;
+  }
+  
+  .badge-medium {
+    background-color: #f39c12;
+  }
+  
+  .badge-high {
+    background-color: #e67e22;
+  }
+  
+  .delete-btn {
+    padding: 6px 12px;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: inherit;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s;
+  }
+  
+  .delete-btn:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  
+  .input-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  input {
+    padding: 12px;
+    font-size: 16px;
+    border: 2px solid #eaeaea;
+    border-radius: 8px;
+    transition: border-color 0.3s;
+  }
+  
+  input:focus {
+    outline: none;
+    border-color: #5cb85c;
+  }
+  
+  .add-btn {
+    padding: 12px;
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    transition: background-color 0.3s;
+  }
+  
+  .add-btn:hover {
+    background-color: #4cae4c;
+  }
+  
+  @media (max-width: 600px) {
+    .todo-container {
+      padding: 15px;
+      margin: 10px;
+    }
+    
+    .todo-item {
+      padding: 12px;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .delete-btn {
+      margin-top: 10px;
+      align-self: flex-end;
+    }
+  }
