@@ -1,6 +1,6 @@
 import express from 'express';
-import { TodoModel } from '../database/todo';
-import { auth } from '../middleware';
+import { TodoModel } from '../database/database.js';
+import { auth } from '../middleware.js';
 const router = express.Router();
 
 // Get all tasks
