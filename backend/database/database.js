@@ -30,8 +30,4 @@ const TodoModel = mongoose.model("Todo", todoSchema);
 const EventModel = mongoose.model("Event", eventSchema);
 
 // Export models properly
-module.exports = {
-    TodoModel,
-    UserModel,
-    EventModel,
-};
+export { TodoModel, UserModel, EventModel };

@@ -1,16 +1,16 @@
-const express=require('express');
+import express from 'express';
 import dotenv from "dotenv";  // Import dotenv
 dotenv.config();  // Load environment variables
 const mongoURL = process.env.MONGO_URL;
-const cors=require('cors');
+import cors from 'cors';
 const app=express();
-const mongoose=require('monggoose');
+import mongoose from 'mongoose';
 import loginOut from "./routes/loginOut.js";
 import calendar from "./routes/calendar.js";
 import allTodo from "./routes/alltodo.js";
 import { auth } from "./middleware.js";
 try {
-    mongoose.connnect(mongoURL);
+    mongoose.connect(mongoURL);
     console.log("Mongoose started");
 } catch (error) {
     console.log("Error in connecting database");

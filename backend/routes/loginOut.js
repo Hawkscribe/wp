@@ -7,8 +7,7 @@ dotenv.config();  // Load environment variables
 
 // ✅ Use `require()` to import database models
 import mongoose from "mongoose";
-const { UserModel } = require("../database/database.js");
-
+import { UserModel } from "../database/database.js";
 const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET;  
 
