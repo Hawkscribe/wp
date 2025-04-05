@@ -1,85 +1,75 @@
-//making a stop clock
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 
-const CountdownTimer=()=>{
-    const [hours,setHours]=useState(0);
-    const [minutes,setMinutes]=useState(0);
-    const [sec,setSec]=useState(0);
-    const [isRunning,setIsRunning]=useState(false);
-    const [isEditing,setIsEditing]=useState(true);;
-    const [timeup,setTimeup]=useState(false);
-    useEffect(()=>{
-        let interval;
-        if (isRunning&&!timeup) {
-            interval=setInterval(()=>{
-                if (sec>0) {
-                    setSec(sec-1);
-                }
-                else if(minutes>0){
-                    setMinutes(minutes-1);
-                    setSec(59);
-                }
-                else if(hours>0){
-                    setHours(hours-1);
-                    setMinutes(59);
-                    setSec(59);
-                }
-                else{
-                    setIsRunning(false);
-                    setTimeup(true);
+const CountdownTimer = () => {
+  const [hours, setHours] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(0);
+  const [isRunning, setIsRunning] = useState(false);
+  const [isEditing, setIsEditing] = useState(true);
+  const [timeup, setTimeup] = useState(false);
 
-
-                    //standard browser alert 
-                    window.alert("Times's up");
-                }
-            },1000);
+  useEffect(() => {
+    let interval;
+    if (isRunning && !timeup) {
+      interval = setInterval(() => {
+        if (seconds > 0) {
+          setSeconds((prev) => prev - 1);
+        } else if (minutes > 0) {
+          setMinutes((prev) => prev - 1);
+          setSeconds(59);
+        } else if (hours > 0) {
+          setHours((prev) => prev - 1);
+          setMinutes(59);
+          setSeconds(59);
+        } else {
+          setIsRunning(false);
+          setTimeup(true);
+          window.alert("Time's up");
         }
-        return()=>clearInterval(interval);
-    },[isRunning,hours,minutes,sec,timeup]);
-    //reset Timer
-    const resetTimer=()=>{
-        setHours(0);
-        setMinutes(0);
-        setSec(0);
-        setTimeup(false);
-        setIsEditing(true);
-        setIsRunning(false);
-    };
-    //start or pause the timer
-
-    const toggletimer=()=>{
-        if (timeup) {
-            resetTimer();
-            return;
-        }
-        if (!isRunning&&(hours>0||minutes>0||sec>0)) {
-            setIsEditing(false);
-            setIsRunning(true);
-        }else{
-            setIsRunning(false);
-        }
+      }, 1000);
     }
-    //time should show only two digit 
-const formatTime=(digit)=>{
-return digit<10?`0${digit}`:digit;
-}
+    return () => clearInterval(interval);
+  }, [isRunning, hours, minutes, seconds, timeup]);
 
-//input putting
-const handelInput=(setter,val,max)=>{
-    const numVal=parseInt(val,10);
+  const resetTimer = () => {
+    setHours(0);
+    setMinutes(0);
+    setSeconds(0);
+    setTimeup(false);
+    setIsEditing(true);
+    setIsRunning(false);
+  };
+
+  const toggleTimer = () => {
+    if (timeup) {
+      resetTimer();
+      return;
+    }
+    if (!isRunning && (hours > 0 || minutes > 0 || seconds > 0)) {
+      setIsEditing(false);
+      setIsRunning(true);
+    } else {
+      setIsRunning(false);
+    }
+  };
+
+  const formatTime = (digit) => (digit < 10 ? `0${digit}` : digit);
+
+  const handleInputChange = (setter, val, max) => {
+    const numVal = parseInt(val, 10);
     if (isNaN(numVal)) {
-        setter(0);
-    }else if (numVal>max) {
-        setter(max);
+      setter(0);
+    } else if (numVal > max) {
+      setter(max);
+    } else {
+      setter(numVal);
     }
-    else{
-        setter(numVal);
-    }
-};
-return (
+  };
+
+  return (
     <div className="flex flex-col items-center justify-center h-screen bg-black text-white">
       <h1 className="text-4xl font-bold mb-8">Countdown Timer</h1>
-      
+
       <div className="mb-8">
         <div className="flex items-center space-x-2">
           {isEditing ? (
@@ -91,7 +81,9 @@ return (
                   min="0"
                   max="99"
                   value={hours}
-                  onChange={(e) => handleInputChange(setHours, e.target.value, 99)}
+                  onChange={(e) =>
+                    handleInputChange(setHours, e.target.value, 99)
+                  }
                   className="w-24 h-20 bg-gray-800 text-center text-white text-7xl font-mono focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-lg"
                 />
               </div>
@@ -103,7 +95,9 @@ return (
                   min="0"
                   max="59"
                   value={minutes}
-                  onChange={(e) => handleInputChange(setMinutes, e.target.value, 59)}
+                  onChange={(e) =>
+                    handleInputChange(setMinutes, e.target.value, 59)
+                  }
                   className="w-24 h-20 bg-gray-800 text-center text-white text-7xl font-mono focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-lg"
                 />
               </div>
@@ -115,7 +109,9 @@ return (
                   min="0"
                   max="59"
                   value={seconds}
-                  onChange={(e) => handleInputChange(setSeconds, e.target.value, 59)}
+                  onChange={(e) =>
+                    handleInputChange(setSeconds, e.target.value, 59)
+                  }
                   className="w-24 h-20 bg-gray-800 text-center text-white text-7xl font-mono focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-lg"
                 />
               </div>
@@ -146,31 +142,30 @@ return (
           )}
         </div>
       </div>
-      
+
       <div className="flex space-x-4">
         {!isRunning && (
-          <button 
+          <button
             className="px-8 py-4 bg-blue-600 text-white rounded-lg font-bold hover:bg-blue-700 transition-colors text-lg"
             onClick={() => setIsEditing(!isEditing)}
           >
             {isEditing ? "Done" : "Edit"}
           </button>
         )}
-        
-        <button 
-          className="px-8 py-4 bg-gray-700 text-white rounded-lg font-bold hover:bg-gray-800 transition-colors text-lg" 
+
+        <button
+          className="px-8 py-4 bg-gray-700 text-white rounded-lg font-bold hover:bg-gray-800 transition-colors text-lg"
           onClick={resetTimer}
         >
           Reset
         </button>
-        
-        <button 
-          className={`px-8 py-4 rounded-lg font-bold transition-colors text-lg
-            ${isRunning 
-              ? 'bg-red-600 hover:bg-red-700' 
-              : 'bg-green-600 hover:bg-green-700'
-            } 
-            text-white`}
+
+        <button
+          className={`px-8 py-4 rounded-lg font-bold transition-colors text-lg ${
+            isRunning
+              ? "bg-red-600 hover:bg-red-700"
+              : "bg-green-600 hover:bg-green-700"
+          } text-white`}
           onClick={toggleTimer}
         >
           {isRunning ? "Pause" : "Start"}
@@ -178,6 +173,6 @@ return (
       </div>
     </div>
   );
+};
 
-}
 export default CountdownTimer;
