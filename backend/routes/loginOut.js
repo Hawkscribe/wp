@@ -2,10 +2,9 @@ import express from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { auth } from "../middleware.js";
-import dotenv from "dotenv";  // Import dotenv
-dotenv.config();  // Load environment variables
+import dotenv from "dotenv";  
+dotenv.config();  
 
-// ✅ Use `require()` to import database models
 import mongoose from "mongoose";
 import { UserModel } from "../database/database.js";
 const router = express.Router();
@@ -16,7 +15,7 @@ router.post("/signup", async (req, res) => {
     const { email, name, password } = req.body;
 
     try {
-        // Hash the password before saving it
+      
         const hashedPassword = await bcrypt.hash(password, 10);
 
         await UserModel.create({

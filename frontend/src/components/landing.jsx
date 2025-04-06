@@ -1,18 +1,17 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 
 export default function CoverPage() {
   const navigate = useNavigate();
 
   const handleContinue = () => {
-    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-    navigate(isLoggedIn ? "/dashboard" : "/login");
+    const token = localStorage.getItem("token");
+    navigate(token ? "/landing" : "/api/user/login");  // 👈 redirect to dashboard or auth
   };
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-br from-indigo-900 to-black text-white">
       <img
-        src="/images.png" // 👈 Replace with your actual logo path
+        src="/images.png" // 👈 Make sure this image path is correct in your public/ folder
         alt="Academic Tracker"
         className="w-70 h-60 mb-6"
       />

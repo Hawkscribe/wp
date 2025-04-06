@@ -14,16 +14,23 @@ router.get('/list',auth, async (req, res) => {
 });
 
 // Add a new task
-router.post('/give', auth,async (req, res) => {
+router.post('/give', auth, async (req, res) => {
     try {
-        const { tasks, priority } = req.body;
-        const newTask = new TodoModel({ task: tasks, priority });
+        const { task, priority} = req.body;  // Use "task" instead of "tasks"
+
+        const newTask = new TodoModel({ task, priority, userId: req.userId });
         await newTask.save();
-        res.status(201).json(newTask);
+
+        res.status(201).json({ 
+            msg: "Task created successfully!", 
+            task: newTask 
+        });
+
     } catch (error) {
-        res.status(500).json({ error: "Error adding task" });
+        res.status(500).json({ error: "Error adding task",details:error.message});
     }
 });
+
 
 // Delete a task
 router.delete('/del/:id',auth, async (req, res) => {

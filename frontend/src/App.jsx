@@ -4,7 +4,7 @@ import TodoList from "./components/todo.jsx";
 import Calendar from "./components/calendar.jsx";
 import Login from "./components/login.jsx";
 import Landing from "./components/landing.jsx";
-function Home() {
+export const Home=()=> {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 to-black text-white px-6">
       <h1 className="text-5xl font-extrabold mb-10 text-center tracking-tight">
@@ -37,11 +37,12 @@ export default function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/home" element={<Home/>}/>
         <Route path="/" element={<Landing />} />
-        <Route path="/clock" element={<Clock />} />
-        <Route path="/todo" element={<TodoList />} />
-        <Route path="/calendar" element={<Calendar />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/api/clock" element={<Clock />} />
+        <Route path="/api/todo" element={<TodoList />} />
+        <Route path="/api/calendar" element={<Calendar />} />
+        <Route path="/api/user/login" element={<Login />} />
       </Routes>
     </Router>
   );

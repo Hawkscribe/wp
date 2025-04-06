@@ -1,6 +1,6 @@
 import express from 'express';
 import dotenv from "dotenv";  // Import dotenv
-dotenv.config();  // Load environment variables
+dotenv.config();  
 const mongoURL = process.env.MONGO_URL;
 import cors from 'cors';
 const app=express();

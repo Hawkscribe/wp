@@ -1,108 +1,95 @@
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link,
-  useNavigate
-} from "react-router-dom";
-import { useState, useEffect } from "react";
-import Clock from "./clock.jsx";
-import TodoList from "./todo.jsx";
-import Calendar from "./calendar.jsx";
-
-// -------- Login Component --------
-function Login() {
+import axios from "axios";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Home } from "../App";
+export default function Auth() {
   const navigate = useNavigate();
+  const [isLogin, setIsLogin] = useState(true);
+  const [name, setName] = useState(""); // Only for signup
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
-    localStorage.setItem("isLoggedIn", "true");
-    navigate("/");
+  const handleAuth = async () => {
+    const url = isLogin
+      ? "http://localhost:5173/api/user/signin"
+      : "http://localhost:5173/api/user/signup";
+    const payload = isLogin
+      ? { email, password }
+      : { name, email, password };
+
+    try {
+      const res = await axios.post(url, payload);
+
+      if (isLogin) {
+        localStorage.setItem("token", res.data.token);
+        navigate("/home");
+      } else {
+        alert("🎉 Signup successful! Please login.");
+        setIsLogin(true);
+        setName("");
+        setEmail("");
+        setPassword("");
+      }
+    } catch (err) {
+      alert(`❌ ${isLogin ? "Login" : "Signup"} failed: ${err.response?.data?.msg}`);
+    }
   };
-
-  return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-br from-gray-900 to-black text-white">
-      <h2 className="text-4xl font-bold mb-8">🔐 Login</h2>
-      <button
-        onClick={handleLogin}
-        className="px-6 py-3 bg-green-600 rounded-xl text-lg font-bold hover:bg-green-700 transition"
-      >
-        Login
-      </button>
-    </div>
-  );
-}
-
-// -------- Logout Component --------
-function LogoutButton() {
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    localStorage.removeItem("isLoggedIn");
-    navigate("/login");
-  };
-
-  return (
-    <button
-      onClick={handleLogout}
-      className="mt-8 px-6 py-3 bg-red-600 text-white rounded-xl font-bold hover:bg-red-700 transition"
-    >
-      Logout
-    </button>
-  );
-}
-
-// -------- Home Component --------
-function Home() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const loggedIn = localStorage.getItem("isLoggedIn") === "true";
-    setIsLoggedIn(loggedIn);
-  }, []);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 to-black text-white px-4">
-      <h1 className="text-5xl font-extrabold mb-10 text-center">
-        🧠 Welcome to Your Dashboard
-      </h1>
+      <div className="w-full max-w-md bg-gray-800 p-8 rounded-2xl shadow-2xl">
+        <div className="flex justify-center mb-6">
+          <button
+            onClick={() => setIsLogin(true)}
+            className={`px-4 py-2 rounded-l-xl font-bold ${
+              isLogin ? "bg-blue-600" : "bg-gray-700"
+            }`}
+          >
+            Login
+          </button>
+          <button
+            onClick={() => setIsLogin(false)}
+            className={`px-4 py-2 rounded-r-xl font-bold ${
+              !isLogin ? "bg-blue-600" : "bg-gray-700"
+            }`}
+          >
+            Signup
+          </button>
+        </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full max-w-4xl">
-        <Link to="/clock" className="p-6 bg-gray-800 hover:bg-gray-700 text-center rounded-xl transition transform hover:scale-105">
-          <h2 className="text-2xl font-semibold">🕒 Clock</h2>
-        </Link>
-        <Link to="/todo" className="p-6 bg-gray-800 hover:bg-gray-700 text-center rounded-xl transition transform hover:scale-105">
-          <h2 className="text-2xl font-semibold">✅ To-Do List</h2>
-        </Link>
-        <Link to="/calendar" className="p-6 bg-gray-800 hover:bg-gray-700 text-center rounded-xl transition transform hover:scale-105">
-          <h2 className="text-2xl font-semibold">📅 Calendar</h2>
-        </Link>
-      </div>
+        <h2 className="text-3xl font-bold text-center mb-6">
+          {isLogin ? "🔐 Login" : "📝 Signup"}
+        </h2>
 
-      {isLoggedIn ? (
-        <LogoutButton />
-      ) : (
-        <Link
-          to="/login"
-          className="mt-10 px-6 py-3 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition"
+        {!isLogin && (
+          <input
+            className="w-full p-3 mb-4 rounded-xl text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Full Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        )}
+        <input
+          className="w-full p-3 mb-4 rounded-xl text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          className="w-full p-3 mb-6 rounded-xl text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
+        <button
+          className="w-full bg-blue-600 hover:bg-blue-700 transition-all py-3 rounded-xl font-bold"
+          onClick={handleAuth}
         >
-          Login
-        </Link>
-      )}
+          {isLogin ? "Login" : "Create Account"}
+        </button>
+      </div>
     </div>
-  );
-}
-
-// -------- Main App --------
-export default function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/clock" element={<Clock />} />
-        <Route path="/todo" element={<TodoList />} />
-        <Route path="/calendar" element={<Calendar />} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
-    </Router>
   );
 }
