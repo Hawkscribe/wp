@@ -5,7 +5,7 @@ export default function CoverPage() {
 
   const handleContinue = () => {
     const token = localStorage.getItem("token");
-    navigate(token ? "/landing" : "/api/user/login");  // 👈 redirect to dashboard or auth
+    navigate(token ? "/PublicHome" : "/api/user/login");  // 👈 redirect to dashboard or auth
   };
 
   return (
