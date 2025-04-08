@@ -4,11 +4,12 @@ import TodoList from "./components/todo.jsx";
 import Calendar from "./components/calendar.jsx";
 import Login from "./components/login.jsx";
 import Landing from "./components/landing.jsx";
+import PublicHome from "./components/PublicHome.jsx";
 export const Home=()=> {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 to-black text-white px-6">
       <h1 className="text-5xl font-extrabold mb-10 text-center tracking-tight">
-        Welcome to Your Dashboard
+        Welcome to Your Dashboard 
       </h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 w-full max-w-4xl">
@@ -39,10 +40,11 @@ export default function App() {
       <Routes>
         <Route path="/home" element={<Home/>}/>
         <Route path="/" element={<Landing />} />
-        <Route path="/api/clock" element={<Clock />} />
-        <Route path="/api/todo" element={<TodoList />} />
-        <Route path="/api/calendar" element={<Calendar />} />
-        <Route path="/api/user/login" element={<Login />} />
+        <Route path="/clock" element={<Clock />} />
+        <Route path="/todo" element={<TodoList />} />
+        <Route path="/calendar" element={<Calendar />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/PublicHome" element={<PublicHome/>}/>
       </Routes>
     </Router>
   );

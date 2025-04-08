@@ -11,8 +11,8 @@ export default function Auth() {
 
   const handleAuth = async () => {
     const url = isLogin
-      ? "http://localhost:5173/api/user/signin"
-      : "http://localhost:5173/api/user/signup";
+      ? "http://localhost:8000/api/user/signin"
+      : "http://localhost:8000/api/user/signup";
     const payload = isLogin
       ? { email, password }
       : { name, email, password };

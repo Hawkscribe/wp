@@ -1,10 +1,11 @@
 import express from "express";
 import { EventModel } from "../database/database.js";
 import moment from "moment";  
+import { auth } from '../middleware.js';
 
 const router = express.Router();
 
-router.post("/event", async (req, res) => {
+router.post("/event",auth, async (req, res) => {
     const { date, message } = req.body;
 
     try {
@@ -30,7 +31,7 @@ router.post("/event", async (req, res) => {
 });
 
 // Get events for a specific month
-router.get("/event/:year/:month", async (req, res) => {
+router.get("/event/:year/:month",auth, async (req, res) => {
     const { year, month } = req.params;
 
     try {
